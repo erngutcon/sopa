@@ -1,0 +1,94 @@
+-- CONTROL CHECK -- 
+
+uml.uxf --> línea 1030 || probablemente sea cambiar el pattern del code a --> "^\w{2}\d{2}\w{2}-\d{6}$"
+
+chimpum.java
+
+- acme.features.inventor.chimpum
+
+	- Controller
+	- Create --> (aunque el code debería ponerlo yo bien en el csv, ya que no hay un create) 
+			public String numbersSecuency() {
+
+			final char[] elementos = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+			final char[] conjunto = new char[2];
+
+			final String secuency;
+
+			for (int i = 0; i < 2; i++) {
+				final int el = (int) (Math.random() * 9);
+				conjunto[i] = elementos[el];
+			}
+
+			secuency = new String(conjunto);
+			return secuency;
+
+		}
+
+		public String lettersSecuency() {
+
+			final char[] elementos = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+					'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+			final char[] conjunto = new char[2];
+
+			final String secuency;
+
+			for (int i = 0; i < 2; i++) {
+				final int el = (int) (Math.random() * 25);
+				conjunto[i] = elementos[el];
+			}
+
+			secuency = new String(conjunto).toUpperCase();
+			return secuency;
+
+		}
+
+En createCode() --> code = lettersSecuency() + numbersSecuency() + lettersSecuency() + "-" + month + day + year ;
+
+	- Delete
+	- List
+	- Repository
+	- Show
+	- Update --> if (!errors.hasErrors("startPeriod")) {
+			Calendar calendar;
+
+			calendar = new GregorianCalendar();
+			calendar.add(Calendar.MONTH, 1);
+			errors.state(request, entity.getStartPeriod().after(calendar.getTime()), "startPeriod", "inventor.comema.form.error.too-close-start-period");
+		}
+		if (!errors.hasErrors("finishPeriod")) {
+			Calendar calendar;
+			Date finish;
+			calendar = new GregorianCalendar();
+			calendar.setTime(entity.getStartPeriod());
+			calendar.add(Calendar.DAY_OF_MONTH, 7);
+			finish = calendar.getTime();
+			errors.state(request, entity.getFinishPeriod().after(finish), "finishPeriod", "inventor.comema.form.error.one-week");
+		}
+
+- acme.features.inventor.item
+
+	- Repository
+	- Show
+
+- acme.forms.administrator
+	- AdministratorDashboard --> línea 67
+	- Repository --> línea 98 --> @Query("select 1.0 * count(c)/ (select count(i) FROM Item i) from Comema c, Item i where i.id=c.item.id and c.item.type = 'COMPONENT' and c.item.id!=NULL")
+	Double ratioOfComponentsWithComemas();
+	- ShowService --> línea 69, 109, 149, 171
+
+- csv de chimpum por el que pida el examen --> http://www.comema1.com p.ej
+
+- views.administrator.administrator-dashboard
+	- form.jsp --> 161
+	- messages-en.i18n
+	- messages-es.i18n
+
+- views.fragments
+
+- views.inventor.chimpum
+
+- views.inventor.item
+
